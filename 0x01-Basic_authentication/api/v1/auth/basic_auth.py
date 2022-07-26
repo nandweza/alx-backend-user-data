@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
 """Basic authentication Module"""
 
-from base64 import b64decode, encode
-
-from httplib2 import Credentials
+from base64 import b64decode
 from api.v1.auth.auth import Auth
 
 

@@ -71,7 +71,7 @@ def before_request():
         abort(403)
 
     if auth.authorization_header(request) and auth.session_cookie(request):
-        return None, abort(401)
+        abort(401)
 
 
 if __name__ == "__main__":

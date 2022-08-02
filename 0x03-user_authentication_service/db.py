@@ -2,9 +2,6 @@
 """DB Module
 """
 
-from ast import Str
-from crypt import methods
-from gettext import find
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -35,7 +32,7 @@ class DB:
             self.__session = DBSession()
         return self.__session
 
-    def add_user(self, email: Str, hashed_password: Str) -> User:
+    def add_user(self, email: str, hashed_password: str) -> User:
         """Saves the user to the database, and returns a User Obj."""
         user = User(email=email, hashed_password=hashed_password)
         self._session.add(user)
@@ -62,6 +59,3 @@ class DB:
             raise NoResultFound
 
         return user
-
-
-            

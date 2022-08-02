@@ -17,6 +17,7 @@ def _hash_password(password: str) -> bytes:
 
     return hashed
 
+
 class Auth:
     """Auth class to interact with the authentication database.
     """

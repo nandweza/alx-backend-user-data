@@ -7,10 +7,12 @@ from flask import Flask, jsonify, abort, request
 app = Flask(__name__)
 AUTH = Auth()
 
+
 @app.route("/", methods=['GET'], strict_slashes=False)
 def hello() -> str:
     """return JSON payload"""
     return jsonify({"message": "Bienvenue"})
+
 
 @app.route("/users", methods=['POST'], strict_slashes=False)
 def user() -> str:

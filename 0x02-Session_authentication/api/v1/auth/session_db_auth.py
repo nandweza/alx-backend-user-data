@@ -3,7 +3,7 @@
 """
 from api.v1.auth.session_exp_auth import SessionExpAuth
 from datetime import datetime, timedelta
-from models.user import UserSession
+from models.user_session import UserSession
 
 
 class SessionDBAuth(SessionExpAuth):

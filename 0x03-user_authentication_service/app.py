@@ -2,8 +2,6 @@
 """API Routes for Authentication Services"""
 
 from crypt import methods
-
-from requests import session
 from auth import Auth
 from flask import Flask, jsonify, abort, redirect, request
 
@@ -81,6 +79,27 @@ def log_out():
     AUTH.destroy_session(user.id)
 
     return redirect('/')
+
+
+@app.route("/profile", methods=['GET'])
+def profile() -> str:
+    """profile function to respond to the GET /profile route.
+    The request is expected to contain a session_id cookie
+    If the user exist, respond with a 200 HTTP status and the
+    following JSON payload:
+        {"email": "<user email>"}
+    """
+    session_id = request.cookies.get('session_id', None)
+
+    if session_id is None:
+        abort(403)
+
+    user = AUTH.get_user_from_session_id(session_id)
+
+    if user is None:
+        abort(403)
+
+    return jsonify({"email": user.email}), 200
 
 
 if __name__ == "__main__":

@@ -2,6 +2,8 @@
 """API Routes for Authentication Services"""
 
 from crypt import methods
+import email
+from re import A
 from auth import Auth
 from flask import Flask, jsonify, abort, redirect, request
 
@@ -100,6 +102,52 @@ def profile() -> str:
         abort(403)
 
     return jsonify({"email": user.email}), 200
+
+
+@app.route("/reset_password", methods=['POST'])
+def reset_password() -> str:
+    """get_reset_password_token function to
+    respond to the POST /reset_password route.
+    """
+    try:
+        email = request.form['email']
+    except KeyError:
+        abort(403)
+
+    try:
+        reset_token = AUTH.get_reset_password_token(email)
+    except ValueError:
+        abort(403)
+
+    msg = {"email": email, "reset_token": reset_token}
+
+    return jsonify(msg), 200
+
+
+@app.route("/reset_password", methods=['PUT'])
+def update_password() -> str:
+    """ PUT /reset_password
+    Updates password with reset token
+    Return:
+        - 400 if bad request
+        - 403 if not valid reset token
+        - 200 and JSON Payload if valid
+    """
+    try:
+        email = request.form['email']
+        reset_token = request.form['reset_token']
+        new_password = request.form['new_passowrd']
+    except KeyError:
+        abort(400)
+
+    try:
+        AUTH.update_password(reset_token, new_password)
+    except ValueError:
+        abort(403)
+
+    msg = {"email": email, "message": "Password updated"}
+
+    return jsonify(msg), 200    
 
 
 if __name__ == "__main__":

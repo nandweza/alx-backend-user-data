@@ -7,15 +7,16 @@ from models.user import User
 from os import getenv
 
 
-@app_views.route("/auth_session/login", methods=['POST'], strictslashes=False)
+@app_views.route("/auth_session/login", methods=['POST'], strict_slashes=False)
 def login():
     """login session route"""
-    
     email = request.form.get('email')
+
     if not email:
         return jsonify({ "error": "email missing" }), 400
     
     password = request.form.get('password')
+
     if not password:
         return jsonify({ "error": "password missing" }), 400
 
@@ -44,7 +45,7 @@ def login():
     return response
 
 @app_views.route('/auth_session/logout', methods=['DELETE'],
-                 strictslashes=False)
+                 strict_slashes=False)
 def logout():
     """logouts user and deletes user session
     Returns Empty dict if successful
@@ -52,9 +53,9 @@ def logout():
 
     from api.v1.app import auth
 
-    del_user = auth.destroy_session(request)
+    deleted = auth.destroy_session(request)
 
-    if not del_user:
+    if not deleted:
         abort(404)
 
     return jsonify({}), 200

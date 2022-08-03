@@ -147,7 +147,7 @@ def update_password() -> str:
 
     msg = {"email": email, "message": "Password updated"}
 
-    return jsonify(msg), 200    
+    return jsonify(msg), 200
 
 
 if __name__ == "__main__":

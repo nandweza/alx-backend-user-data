@@ -1,9 +1,6 @@
 #!/usr/bin/env python3
 """API Routes for Authentication Services"""
 
-from crypt import methods
-import email
-from re import A
 from auth import Auth
 from flask import Flask, jsonify, abort, redirect, request
 
